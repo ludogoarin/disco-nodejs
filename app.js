@@ -9,7 +9,9 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
-var app = express();
+var app = express()
+  , server = require('http').createServer(app)
+  , io = require('socket.io').listen(server);
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -29,7 +31,17 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/test', function (req, res) {
+  res.sendfile(__dirname + '/test.html');
+});
 
-http.createServer(app).listen(app.get('port'), function(){
+server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
+});
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
