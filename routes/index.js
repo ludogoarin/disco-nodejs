@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Getable' });
+  res.render('index', { title: 'Getable', activetab: 'index' });
 };

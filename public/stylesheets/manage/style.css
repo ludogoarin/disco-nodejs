@@ -1,7 +1,8 @@
 html,
 body {
     height: 100%;
-    /* The html and body elements cannot have any padding or margin. */
+    padding-top: 30px;
+    padding-bottom: 40px;    /* The html and body elements cannot have any padding or margin. */
 }
 
 /* Wrapper for page content to push down footer */
@@ -25,13 +26,17 @@ body {
     background-color: #f5f5f5;
 }
 
+.sidebar-nav {
+    padding: 9px 0;
+}
+
 /* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
+@media {
     #footer {
         margin-left: -20px;
         margin-right: -20px;
-        padding-left: 20px;
-        padding-right: 20px;
+        padding-left: 40px;
+        padding-right: 40px;
     }
 }
 
@@ -40,7 +45,7 @@ body {
 
 .container {
     width: auto;
-    max-width: 680px;
+    max-width: 100%;
 }
 .container .credit {
     margin: 20px 0;

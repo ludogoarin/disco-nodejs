@@ -1,0 +1,35 @@
+extend layout
+
+block content
+	h1= title
+	form(action="/tasks/complete", method="post")
+		table(border="1")
+			tr
+				td Name
+				td Category
+				td Date
+				td Complete
+			each task in tasks
+				tr
+					td #{task.itemName}
+					td #{task.itemCategory}
+					- var day   = task.itemDate.getDate();
+					- var month = task.itemDate.getMonth() + 1;
+					- var year  = task.itemDate.getFullYear();
+					td #{month + "/" + day + "/" + year}
+					td
+						input(type="checkbox", name="completedids", value="#{task._id}", checked=task.itemCompleted)
+						input(type="hidden", name="taskids", value="#{task._id}")
+		input(type="submit", value="Update tasks")
+	hr
+	form(action="/tasks/add", method="post")
+		table(border="1") 
+			tr
+				td Item Name: 
+				td 
+					input(name="item[name]", type="textbox")
+			tr
+				td Item Category: 
+				td 
+					input(name="item[category]", type="textbox")
+		input(type="submit", value="Add item")

@@ -1,0 +1,73 @@
+!!! 5
+html
+    head
+        title= title
+        link(rel='stylesheet', href='http://twitter.github.com/bootstrap/assets/css/bootstrap.css')
+        link(rel='stylesheet', href='http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css')
+        link(rel='stylesheet', href='/stylesheets/manage/style.css')
+    body
+
+        div.navbar.navbar-inverse.navbar-fixed-top
+            div.navbar-inner
+                div.container
+
+                    a.btn.btn-navbar
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+
+                    <a class="brand" href="/manage">Getable Management Interface</a>
+                    div.nav-collapse.collapse
+                        ul.nav
+                            <li class="#{activetab == 'index' ? 'active':''}"><a href="/manage">Home</a></li>
+                            <li class="#{activetab == 'tasks' ? 'active':''}"><a href="/manage/users">Users</a></li>
+
+
+        div.container-fluid
+            div.row-fluid
+                div.span3
+                    div.well.sidebar-nav
+                        ul.nav.nav-list
+                            li.nav-header Inventory
+                            <li><a href="#">Categories</a/l></li>
+                            <li><a href="#">Products</a></li>
+
+                            <li class="nav-header">Vendors</li>
+                            <li><a href="#">Manage Vendors</a></li>
+
+                            <li class="nav-header">Orders</li>
+                            <li><a href="#">View Orders</a></li>
+                            <li><a href="#">Reports</a></li>
+
+
+                div.span9
+
+                    block content
+
+
+
+
+
+        <div id="push"></div>
+
+
+
+        div#footer
+            div.container
+                p.muted.credit
+                    © Getable, Inc 2013 - <a href="http://www.getable.com">www.getable.com</a>.
+
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-button.js"></script>
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-carousel.js"></script>
+        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-typeahead.js"></script>
+
