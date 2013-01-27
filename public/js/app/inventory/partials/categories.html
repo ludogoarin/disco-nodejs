@@ -1,0 +1,44 @@
+
+<h3>Categories
+
+    <!-- Button to trigger modal -->
+    <a href="#mdl_new_item" role="button" class="btn" data-toggle="modal" style="float: right;">Add category</a>
+</h3>
+
+<!-- Modal -->
+<div id="mdl_new_item" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mdl_newcat_lbl" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="mdl_newcat_lbl">Add a category</h3>
+    </div>
+    <div class="modal-body">
+
+        <div id="new_item_messages"></div>
+
+        <form method="post" id="form_item_new" name="form_item_new">
+            <input name="name" ng-model="newItem.name" required type="text" class="input-block-level" placeholder="Category name">
+            <input name="key" ng-model="newItem.key" required type="text" class="input-block-level" placeholder="Unique key">
+            <input name="image_url" ng-model="newItem.image_url" type="text" class="input-block-level" placeholder="Image URL">
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary" ng-click="addItem()">Save changes</button>
+    </div>
+</div>
+
+
+<ul class="categories thumbnails span12">
+    <li ng-repeat="item in categories" class="span3">
+        <div class="thumbnail" style="text-align: center;">
+            <img ng-src="{{item.image_url}}">
+            <h5>{{item.name}}</h5>
+            <div class="btn-group">
+                <a class="btn btn-small" href="#/category/{{item._id}}">Edit category</a>
+                <a class="btn btn-small" href="#/products/{{item._id}}">View products</a>
+            </div>
+        </div>
+    </li>
+</ul>
+

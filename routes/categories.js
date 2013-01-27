@@ -1,10 +1,28 @@
 var mongo = require('mongodb');
-var BSON = mongo.BSONPure;
+var BSON = mongo.BSONPure
+    , _ = require('underscore')._;
+
 var db = null;
 
 exports.setdb = function(dbObject) {
-    console.log('db set');
     db = dbObject;
+
+    db.collection('categories', {safe:true}, function(err, collection) {
+        console.log('*** categories ***');
+        console.log('Checking that collection exists');
+        var items = collection.find();
+        var rowCount = items.totalNumberOfRecords;
+        console.log(items);
+        console.log(rowCount);
+
+        if (err || rowCount == 0) {
+            //console.log("Collection doesn't exist. Creating it with sample data...");
+            //populateDB();
+            //console.log('Collection created and populated with sample data.')
+        } else {
+            console.log('Ok. Collection exists.');
+        }
+    });
 };
 
 exports.test = function(){
@@ -82,7 +100,7 @@ exports.updateCategory = function(req, res) {
                 res.send({'error':'An error has occurred'});
             } else {
                 console.log('' + result + ' document(s) updated');
-                res.send(wine);
+                res.send(category);
             }
         });
     });

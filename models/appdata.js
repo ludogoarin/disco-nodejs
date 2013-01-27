@@ -1,4 +1,3 @@
-
 // data connection
 var mongo = require('mongodb');
 
@@ -6,31 +5,33 @@ var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
 
-var server = new Server('localhost', 27017, {auto_reconnect: true});
+// Connect to database
+//var dbConn = 'mongodb://mngoldo:hjk78Ttgs98@ds045107.mongolab.com:45107/disco1';
+var dbConn = process.env.DB_CONNECTION || 'mongodb://localhost:27017/gtbl_disco';
 
-db = new Db('gtbl_disco', server, {safe: true});
-
-// open database
-db.open(function(err, db) {
-    if(err) {
-        throw err;
-    } else {
-        console.log('connected');
-
-        // ensure database is filled with starting data
-        prepareDb();
-        
-        // send db object to each data repo
-        exports.categories.setdb(db);
-    }
+mongo.MongoClient.connect(dbConn, function(err, db) {
+    console.log('opened db connection');
+    initDataRepos(db);
 });
 
-exports.categories = require('../routes/categories');
+function initDataRepos(dbInstance){
+    // ensure database is filled with starting data
+    prepareDb();
 
-exports.configure = function() {
-
+    // send db object to each data repo
+    exports.categories.setdb(dbInstance);
+    exports.products.setdb(dbInstance);
+    exports.attributes.setdb(dbInstance);
+    exports.vendors.setdb(dbInstance);
 }
-    
-var prepareDb = function(){
 
+exports.categories = require('../routes/categories');
+exports.products = require('../routes/products');
+exports.attributes = require('../routes/attributes');
+exports.vendors = require('../routes/vendors');
+
+var prepareDb = function(){
+    // 1. build default data collections
+
+    // 2. ensure indexes on default collection properties
 }

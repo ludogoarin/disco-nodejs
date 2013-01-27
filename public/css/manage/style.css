@@ -51,28 +51,24 @@ body {
     margin: 20px 0;
 }
 
-.form-tasks {
-    max-width: 300px;
-    padding: 19px 29px 29px;
-    margin: 0 auto 20px;
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-    box-shadow: 0 1px 2px rgba(0,0,0,.05);
-}
-.form-tasks .form-signin-heading,
-.form-tasks .checkbox {
-    margin-bottom: 10px;
-}
-.form-tasks input[type="text"],
-.form-tasks input[type="password"] {
-    font-size: 16px;
-    height: auto;
-    margin-bottom: 15px;
-    padding: 7px 9px;
+h5 {
+    width: 100%;
+    white-space: nowrap;
+    margin-bottom: 4px;
 }
 
+.thumbnail {
+    min-width: 180px;
+}
+
+.thumbnails li {
+    margin-left: 0px !important;
+    margin-right: 20px !important;
+}
+
+.no-bullet,
+.no-bullet li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

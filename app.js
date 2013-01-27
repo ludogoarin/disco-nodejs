@@ -1,8 +1,3 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express')
   , routes = require('./routes')
   , doc = require('./routes/doc')
@@ -29,7 +24,6 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-
 app.get('/', routes.index);
 app.get('/doc', doc.index);
 app.get('/socketiotest', function (req, res) {
@@ -39,12 +33,35 @@ app.get('/socketiotest', function (req, res) {
 // management interface
 app.get('/manage', manage.index)
 
-// api
+// data access
 var appData = require('./models/appdata');
-appData.configure();
 
-// api routes
-app.get('/categories/test', appData.categories.test);
+/** api routes **/
+// categories
+app.get('/categories/all', appData.categories.findAll);
+app.get('/category/:id', appData.categories.findById);
+app.delete('/category/:id', appData.categories.deleteCategory);
+app.put('/category/:id', appData.categories.updateCategory);
+app.post('/categories/add', appData.categories.addCategory);
+// products
+app.get('/products/all', appData.products.findAll);
+app.get('/product/:id', appData.products.findById);
+app.get('/products/:categoryId', appData.products.findByCategoryId);
+app.delete('/product/:id', appData.products.deleteProduct);
+app.put('/product/:id', appData.products.updateProduct);
+app.post('/products/add', appData.products.addProduct);
+// attributes
+app.get('/attributes/all', appData.attributes.findAll);
+app.get('/attribute/:id', appData.attributes.findById);
+app.delete('/attribute/:id', appData.attributes.deleteAttribute);
+app.put('/attribute/:id', appData.attributes.updateAttribute);
+app.post('/attributes/add', appData.attributes.addAttribute);
+// vendors
+app.get('/vendors/all', appData.vendors.findAll);
+app.get('/vendor/:id', appData.vendors.findById);
+app.delete('/vendor/:id', appData.vendors.deleteVendor);
+app.put('/vendor/:id', appData.vendors.updateVendor);
+app.post('/vendors/add', appData.vendors.addVendor);
 
 /*
 // tasklist test app
@@ -62,6 +79,8 @@ server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
+
+// dashboard through socket.io
 io.sockets.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {

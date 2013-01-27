@@ -1,0 +1,63 @@
+
+<h3>Vendors
+
+    <!-- Button to trigger modal -->
+    <a href="#mdl_new_item" role="button" class="btn" data-toggle="modal" style="float: right;">Add vendor</a>
+</h3>
+
+<!-- Modal -->
+<div id="mdl_new_item" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mdl_newcat_lbl" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="mdl_newcat_lbl">Add a vendor</h3>
+    </div>
+    <div class="modal-body">
+
+        <div id="new_item_messages"></div>
+
+        <form method="post" id="form_item_new" name="form_item_new">
+            <input ng-model="newItem.name" required type="text" class="input-block-level" placeholder="Vendor name">
+            <input ng-model="newItem.address.street" ng-change="loadCoordinates()" required type="text" class="input-block-level" placeholder="Street address">
+            <input ng-model="newItem.address.street2" type="text" class="input-block-level" placeholder="Street address 2">
+            <input ng-model="newItem.address.city" ng-change="loadCoordinates()" required type="text" class="input-large" placeholder="City">
+            <select ng-model="newItem.address.state" ng-change="loadCoordinates()" required ng-options="item.Value as item.Label for item in states"></select>
+            <input ng-model="newItem.address.postal_code" ng-change="loadCoordinates()" ng-blur="loadCoordinates()" type="number" class="input-mini" placeholder="Zip">
+            <input ng-model="newItem.address.country" type="hidden">
+
+            <br>
+            lat: <span ng-bind="newItem.coordinates.lat"></span>
+            long: <span ng-bind="newItem.coordinates.long"></span>
+
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary" ng-click="addItem()">Save changes</button>
+    </div>
+</div>
+
+
+<form class="form-search">
+    <input type="text" class="input-medium search-query" placeholder="Search by name">
+    <button type="submit" class="btn">Search</button>
+</form>
+
+<table class="table">
+    <thead>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Active</th>
+    <th></th>
+    </thead>
+    <tr ng-repeat="item in vendors">
+        <td>{{item.name}}</td>
+        <td>{{item.address}}</td>
+        <td>{{item.active}}</td>
+        <td>
+            <div class="btn-group">
+                <a class="btn btn-small" href="#/attribute/{{item._id}}">Edit</a>
+            </div>
+        </td>
+    </tr>
+</table>

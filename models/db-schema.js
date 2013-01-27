@@ -54,13 +54,10 @@ var dbSchema = {
         "key": string,
         "category_ids": [CATEGORY_ID],
         "name": string,
+        "description": string,
         "type": string,
-        "sku": string,
         "image_url": string,
-        "attributes": [{
-            "name": string,
-            "options": []
-        }],
+        "attribute_ids": [ATTRIBUTE_ID],
         "rates": [{
             "unit": string,
             "unit_count": int,
@@ -87,7 +84,7 @@ var dbSchema = {
                 "product": {
                     "name": string,
                     "sku": string
-                }
+                },
                 "price": float,
                 "rates": [{
                     "unit": string,
@@ -108,7 +105,7 @@ var dbSchema = {
             },
             "requested_time": datetime,
             "estimated_time": datetime
-        }
+        },
         "messages": [{
             "from": string,
             "type": string,
@@ -154,8 +151,10 @@ var dbSchema = {
     // product attributes collection
     "attributes": [{
         "_id": ObjectID,
+        "key": string,
         "name": string,
-        "internal_name": string,
-        "data_type": string
+        "input_type": string,
+        "data_type": string,
+        "options": [string]
     }]
 }

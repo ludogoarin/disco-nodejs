@@ -1,0 +1,61 @@
+
+<h3>Attributes > Edit</h3>
+
+<h5>{{attribute.name}}</h5>
+
+<form method="post" id="form_item_edit" name="form_item_edit" class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label" for="inputName">Name</label>
+        <div class="controls">
+            <input name="name" id="inputName" type="text" class="input-block-level" placeholder="Attribute name" ng-model="attribute.name">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputKey">Unique Key</label>
+        <div class="controls">
+            <input name="name" id="inputKey" type="text" class="input-block-level" placeholder="Unique key" ng-model="attribute.key">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="selectDataType">Data type</label>
+        <div class="controls">
+            <select id="selectDataType" class="input-block-level" ng-model="attribute.data_type">
+                <option value="text">text</option>
+                <option value="number">number</option>
+                <option value="date">date</option>
+                <option value="boolean">yes/no (boolean)</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="selectInputType">Input type</label>
+        <div class="controls">
+            <select id="selectInputType" class="input-block-level" ng-change="inputTypeChange()" ng-model="attribute.input_type">
+                <option value="text-field">text field</option>
+                <option value="select-one">select one</option>
+                <option value="select-multiple">select multiple</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group" ng-show="showOptions()">
+        <label class="control-label">Options</label>
+        <div class="controls">
+
+            <ul class="no-bullet">
+                <li ng-repeat="option in attribute.options">
+                    <input id="inputOption" placeholder="option value" type="text" ng-model="option.value">
+                    <a href ng-click="attribute.options.splice($index, 1)">X</a>
+                </li>
+                <li>
+                    <a href ng-click="attribute.options.push({})">add</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <a class="btn" href="#/attributes">Back</a>
+    <button class="btn btn-primary" ng-click="updateItem()">Save changes</button>
+</form>
+
+<button class="btn btn-danger" ng-click="deleteItem()">Delete item</button>

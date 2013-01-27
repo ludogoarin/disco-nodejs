@@ -1,23 +1,29 @@
 var mongo = require('mongodb');
+var BSON = mongo.BSONPure
+    , _ = require('underscore')._;
 
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
+var db = null;
 
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('gtbl_disco', server, {safe: true});
+exports.setdb = function(dbObject) {
+    db = dbObject;
 
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to 'gtbl_disco' database");
-        db.collection('vendors', {safe:true}, function(err, collection) {
-            if (err) {
-                console.log("The 'vendors' collection doesn't exist. Creating it with sample data...");
-                populateDB();
-            }
-        });
-    }
-});
+    db.collection('attributes', {safe:true}, function(err, collection) {
+        console.log('*** attributes ***');
+        console.log('Checking that collection exists');
+        var items = collection.find();
+        var rowCount = items.totalNumberOfRecords;
+        console.log(items);
+        console.log(rowCount);
+
+        if (err || rowCount == 0) {
+            //console.log("Collection doesn't exist. Creating it with sample data...");
+            //populateDB();
+            //console.log('Collection created and populated with sample data.')
+        } else {
+            console.log('Ok. Collection exists.');
+        }
+    });
+};
 
 exports.findById = function(req, res) {
     var id = req.params.id;
@@ -65,7 +71,7 @@ exports.updateVendor = function(req, res) {
                 res.send({'error':'An error has occurred'});
             } else {
                 console.log('' + result + ' document(s) updated');
-                res.send(wine);
+                res.send(vendor);
             }
         });
     });
@@ -95,7 +101,7 @@ var populateDB = function() {
     {
         vertical_ids: [VERTICAL_ID],
         name: "United Rentals",
-        image_url: "http://www.ohs.org/shop/images/Museum-Store_1.jpg",
+        image_url: "http://www.ohs.org/shop/img/Museum-Store_1.jpg",
         coordinates: {
             long: 37.75771992816863,
             lat: -122.43760000000003
@@ -122,7 +128,7 @@ var populateDB = function() {
     {
         vertical_ids: [VERTICAL_ID],
         name: "Cresco Rent",
-        image_url: "http://www.ohs.org/shop/images/Museum-Store_1.jpg",
+        image_url: "http://www.ohs.org/shop/img/Museum-Store_1.jpg",
         coordinates: {
             long: 37.73980315483037,
             lat: -122.40601430664066

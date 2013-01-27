@@ -1,0 +1,54 @@
+
+<h3>Products > Edit</h3>
+
+<h5>{{product.name}}</h5>
+
+<form method="post" id="form_item_edit" name="form_item_edit" class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label" for="inputName">Name</label>
+        <div class="controls">
+            <input name="name" id="inputName" type="text" class="input-block-level" placeholder="Product name" ng-model="product.name">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputKey">Product code</label>
+        <div class="controls">
+            <input name="name" id="inputKey" type="text" class="input-block-level" placeholder="Product code" ng-model="product.key">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputImage_url">Image URL</label>
+        <div class="controls">
+            <input name="image_url" id="inputImage_url" type="text" class="input-block-level" placeholder="Image URL" ng-model="product.image_url">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputDescription">Image URL</label>
+        <div class="controls">
+            <textarea id="inputDescription" type="text" class="input-block-level" placeholder="Description" ng-model="product.description">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Categories</label>
+        <div class="controls">
+            <div ng-repeat="item in categories">
+                <label class="checkbox"><input type="checkbox" ng-model="item.selected">{{item.name}}</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Attributes</label>
+        <div class="controls">
+            <div ng-repeat="item in attributes">
+                <label class="checkbox"><input type="checkbox" ng-model="item.selected">{{item.name}}</label>
+            </div>
+        </div>
+    </div>
+
+    <a class="btn" href="javascript:window.history.back();">Back</a>
+    <button class="btn btn-primary" ng-click="updateItem()">Save changes</button>
+</form>
+
+<button class="btn btn-danger" ng-click="deleteItem()">Delete item</button>

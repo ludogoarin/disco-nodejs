@@ -1,10 +1,11 @@
 !!! 5
-html
+html(ng-app='manage')
     head
         title= title
         link(rel='stylesheet', href='http://twitter.github.com/bootstrap/assets/css/bootstrap.css')
         link(rel='stylesheet', href='http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css')
-        link(rel='stylesheet', href='/stylesheets/manage/style.css')
+        link(rel='stylesheet', href='/css/manage/style.css')
+        link(rel='stylesheet', href='/css/manage/form.css')
     body
 
         div.navbar.navbar-inverse.navbar-fixed-top
@@ -19,8 +20,8 @@ html
                     <a class="brand" href="/manage">Getable Management Interface</a>
                     div.nav-collapse.collapse
                         ul.nav
-                            <li class="#{activetab == 'index' ? 'active':''}"><a href="/manage">Home</a></li>
-                            <li class="#{activetab == 'tasks' ? 'active':''}"><a href="/manage/users">Users</a></li>
+                            <li class="#{activetab == 'index' ? 'active':''}"><a href="#/">Home</a></li>
+                            <li class="#{activetab == 'tasks' ? 'active':''}"><a href="#/users">Users</a></li>
 
 
         div.container-fluid
@@ -29,19 +30,21 @@ html
                     div.well.sidebar-nav
                         ul.nav.nav-list
                             li.nav-header Inventory
-                            <li><a href="#">Categories</a/l></li>
-                            <li><a href="#">Products</a></li>
+                            <li><a href="#categories">Categories</a/l></li>
+                            <li><a href="#products">Products</a></li>
+                            <li><a href="#attributes">Attributes</a></li>
 
-                            <li class="nav-header">Vendors</li>
-                            <li><a href="#">Manage Vendors</a></li>
+                            li.nav-header Vendors
+                            <li><a href="#vendors">Vendors</a></li>
 
-                            <li class="nav-header">Orders</li>
-                            <li><a href="#">View Orders</a></li>
-                            <li><a href="#">Reports</a></li>
+                            li.nav-header Orders
+                            <li><a href="#orders">View Orders</a></li>
+                            <li><a href="#reports">Reports</a></li>
 
 
                 div.span9
 
+                    <div id="alert_global"></div>
                     block content
 
 
@@ -55,19 +58,17 @@ html
         div#footer
             div.container
                 p.muted.credit
-                    © Getable, Inc 2013 - <a href="http://www.getable.com">www.getable.com</a>.
+                    © Getable 2013 - <a href="http://www.getable.com" target="_blank">www.getable.com</a>.
 
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-button.js"></script>
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-carousel.js"></script>
-        <script src="href='http://twitter.github.com/bootstrap/assets/js/bootstrap-typeahead.js"></script>
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js')
+        script(src='/js/lib/bootstrap.min.js')
+        script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js')
+        script(src='//maps.google.com/maps/api/js?sensor=false&region=us')
+        script(src='/js/lib/underscore-min.js')
+        script(src='/js/lib/location.js')
 
+        script(src='/js/app/app.util.js')
+        script(src='/js/app/app.cache.js')
+        script(src='/js/app/filters.js')
+        script(src='/js/app/services.js')
+        script(src='/js/app/app.js')

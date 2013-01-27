@@ -1,0 +1,30 @@
+
+<h3>Categories > Edit</h3>
+
+<h5>{{category.name}}</h5>
+
+<form method="post" id="form_item_edit" name="form_item_edit" class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label" for="inputName">Name</label>
+        <div class="controls">
+            <input name="name" id="inputName" type="text" class="input-block-level" placeholder="Category name" ng-model="category.name">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputKey">Unique Key</label>
+        <div class="controls">
+            <input name="name" id="inputKey" type="text" class="input-block-level" placeholder="Unique key" ng-model="category.key">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputImage_url">Image URL</label>
+        <div class="controls">
+            <input name="image_url" id="inputImage_url" type="text" class="input-block-level" placeholder="Image URL" ng-model="category.image_url">
+        </div>
+    </div>
+
+    <a class="btn" href="#/categories">Back</a>
+    <button class="btn btn-primary" ng-click="updateItem()">Save changes</button>
+</form>
+
+<button class="btn btn-danger" ng-click="deleteItem()">Delete item</button>

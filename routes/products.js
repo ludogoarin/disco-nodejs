@@ -1,23 +1,28 @@
 var mongo = require('mongodb');
+var BSON = mongo.BSONPure
+    , _ = require('underscore')._;
 
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
+var db = null;
 
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('gtbl_disco', server, {safe: true});
+exports.setdb = function(dbObject) {
+    db = dbObject;
 
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to 'gtbl_disco' database");
-        db.collection('products', {safe:true}, function(err, collection) {
-            if (err) {
-                console.log("The 'products' collection doesn't exist. Creating it with sample data...");
-                populateDB();
-            }
-        });
-    }
-});
+    db.collection('products', {safe:true}, function(err, collection) {
+        console.log('*** products ***');
+        console.log('Checking that collection exists');
+        var items = collection.find();
+        var rowCount = items.totalNumberOfRecords;
+        console.log(rowCount);
+
+        if (err || rowCount == 0) {
+            //console.log("Collection doesn't exist. Creating it with sample data...");
+            //populateDB();
+            //console.log('Collection created and populated with sample data.')
+        } else {
+            console.log('Ok. Collection exists.');
+        }
+    });
+};
 
 exports.findById = function(req, res) {
     var id = req.params.id;
@@ -32,6 +37,15 @@ exports.findById = function(req, res) {
 exports.findAll = function(req, res) {
     db.collection('products', function(err, collection) {
         collection.find().toArray(function(err, items) {
+            res.send(items);
+        });
+    });
+};
+
+exports.findByCategoryId = function(req, res) {
+    var categoryId = req.params.categoryId;
+    db.collection('products', function(err, collection) {
+        collection.find({ category_ids: { $all: [categoryId]} }).toArray(function(err, items) {
             res.send(items);
         });
     });
@@ -65,7 +79,7 @@ exports.updateProduct = function(req, res) {
                 res.send({'error':'An error has occurred'});
             } else {
                 console.log('' + result + ' document(s) updated');
-                res.send(wine);
+                res.send(product);
             }
         });
     });
@@ -88,26 +102,16 @@ exports.deleteProduct = function(req, res) {
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 // Populate database with sample data -- Only used once: the first time the application is started.
-// You'd typically not find this code in a real-life app, since the database would already exist.
 var populateDB = function() {
 
     var products = [
     {
-        category_ids: [], // aray of category ids
+        category_ids: [], // array of category ids
         name: "Telescopic Boom",
         type: "rental",
         sku: "asd",
-        image_url: "http://dsc.discovery.com/tv/how-stuff-works/images/beer.jpg",
-        attributes: [
-        {
-            name: "length (FT)",
-            options: "20,40"
-        },
-        {
-            name: "fuel",
-            value: "diesel,gasoline"
-        }
-        ],
+        image_url: "http://dsc.discovery.com/tv/how-stuff-works/img/beer.jpg",
+        attribute_ids: [],
         rates: [{
             unit: "day",
             unit_count: 1,
@@ -115,19 +119,12 @@ var populateDB = function() {
         }]
     },
     {
-        category_ids: [], // aray of category ids
+        category_ids: [], // array of category ids
         name: "Telescopic Boom",
         type: "rental",
         sku: "asd",
-        image_url: "http://dsc.discovery.com/tv/how-stuff-works/images/beer.jpg",
-        attributes: [{
-            name: "drive",
-            value: "2WD"
-        },{
-            name: "fuel",
-            value: "diesel"
-        }
-        ],
+        image_url: "http://dsc.discovery.com/tv/how-stuff-works/img/beer.jpg",
+        attribute_ids: [],
         rates: [{
             unit: "day",
             unit_count: 1,
@@ -135,19 +132,12 @@ var populateDB = function() {
         }]
     },
     {
-        category_ids: [], // aray of category ids
+        category_ids: [], // array of category ids
         name: "Telescopic Boom, 40FT",
         type: "rental",
         sku: "asd",
-        image_url: "http://dsc.discovery.com/tv/how-stuff-works/images/beer.jpg",
-        attributes: [{
-            name: "drive",
-            value: "2WD"
-        },{
-            name: "fuel",
-            value: "diesel"
-        }
-        ],
+        image_url: "http://dsc.discovery.com/tv/how-stuff-works/img/beer.jpg",
+        attribute_ids: [],
         rates: [{
             unit: "day",
             unit_count: 1,

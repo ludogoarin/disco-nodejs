@@ -65,7 +65,7 @@ exports.updateVertical = function(req, res) {
                 res.send({'error':'An error has occurred'});
             } else {
                 console.log('' + result + ' document(s) updated');
-                res.send(wine);
+                res.send(vertical);
             }
         });
     });
@@ -98,7 +98,7 @@ var populateDB = function() {
     },
     {
         name: "Construction",
-        image_url: "http://www.coasttocoasteventrentals.com/images/showroomSmLabel.jpg"
+        image_url: "http://www.coasttocoasteventrentals.com/img/showroomSmLabel.jpg"
     }];
 
     db.collection('verticals', function(err, collection) {

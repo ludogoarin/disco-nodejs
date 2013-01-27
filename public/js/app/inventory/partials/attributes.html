@@ -1,0 +1,63 @@
+<h3>Attributes
+
+    <!-- Button to trigger modal -->
+    <a href="#mdl_new_item" role="button" class="btn" data-toggle="modal" style="float: right;">Add attribute</a>
+</h3>
+
+<!-- Modal -->
+<div id="mdl_new_item" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mdl_newitem_lbl" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="mdl_newitem_lbl">Add an attribute</h3>
+    </div>
+    <div class="modal-body">
+
+        <div id="new_item_messages"></div>
+
+        <form method="post" id="form_item_new" name="form_item_new">
+            <input name="name" ng-model="newItem.name" required type="text" class="input-block-level" placeholder="Attribute name">
+            <input name="key" ng-model="newItem.key" required type="text" class="input-block-level" placeholder="Unique key">
+
+            <label class="select" for="selectDataType">Data Type:</label>
+            <select id="selectDataType" class="input-block-level" ng-model="newItem.data_type">
+                <option value="text">text</option>
+                <option value="number">number</option>
+                <option value="date">date</option>
+                <option value="boolean">yes/no (boolean)</option>
+            </select>
+
+            <label class="select" for="selectInputType">Input Type:</label>
+            <select id="selectInputType" class="input-block-level" ng-model="newItem.input_type">
+                <option value="text-field">text field</option>
+                <option value="select-one">select one</option>
+                <option value="select-multiple">select multiple</option>
+            </select>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary" ng-click="addItem()">Save changes</button>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Input Type</th>
+        <th>Data Type</th>
+        <th></th>
+    </thead>
+    <tr ng-repeat="item in attributes">
+        <td>{{item.name}}</td>
+        <td>{{item.key}}</td>
+        <td>{{item.input_type}}</td>
+        <td>{{item.data_type}}</td>
+        <td>
+            <div class="btn-group">
+                <a class="btn btn-small" href="#/attribute/{{item._id}}">Edit</a>
+            </div>
+        </td>
+    </tr>
+</table>
