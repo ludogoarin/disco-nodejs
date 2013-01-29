@@ -39,8 +39,8 @@
 
 
 <form class="form-search">
-    <input type="text" class="input-medium search-query" placeholder="Search by name">
-    <button type="submit" class="btn">Search</button>
+    <input type="text" ng-model="search.query" class="input-medium search-query" placeholder="Search by name">
+    <button type="submit" class="btn" ng-click="search()">Search</button>
 </form>
 
 <table class="table">
@@ -50,13 +50,13 @@
     <th>Active</th>
     <th></th>
     </thead>
-    <tr ng-repeat="item in vendors">
+    <tr ng-repeat="item in search.results">
         <td>{{item.name}}</td>
-        <td>{{item.address}}</td>
+        <td>{{item.address.city}}, {{item.address.state}}</td>
         <td>{{item.active}}</td>
         <td>
             <div class="btn-group">
-                <a class="btn btn-small" href="#/attribute/{{item._id}}">Edit</a>
+                <a class="btn btn-small" href="#/vendor/{{item._id}}">Edit</a>
             </div>
         </td>
     </tr>

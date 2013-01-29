@@ -1,0 +1,42 @@
+
+<h3>Vendors > Edit</h3>
+
+<h5>{{vendor.name}}</h5>
+
+<form method="post" id="form_item_edit" name="form_item_edit" class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label" for="inputName">Name</label>
+        <div class="controls">
+            <input name="name" id="inputName" type="text" class="input-block-level" placeholder="Vendor name" ng-model="vendor.name">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputStreet">Street address</label>
+        <div class="controls">
+            <input id="inputStreet" ng-model="vendor.address.street" ng-change="loadCoordinates()" required type="text" class="input-block-level" placeholder="Street address">
+            <input ng-model="vendor.address.street2" type="text" class="input-block-level" placeholder="Street address 2">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputCity">City/State/Zip</label>
+        <div class="controls">
+            <input id="inputCity" ng-model="vendor.address.city" ng-change="loadCoordinates()" required type="text" class="input-large" placeholder="City">
+            <select ng-model="vendor.address.state" ng-change="loadCoordinates()" required ng-options="item.Value as item.Label for item in states"></select>
+            <input ng-model="vendor.address.postal_code" ng-change="loadCoordinates()" ng-blur="loadCoordinates()" type="number" class="input-mini" placeholder="Zip">
+            <input ng-model="vendor.address.country" type="hidden">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Coordinates</label>
+        <div class="controls">
+            Latitude: <span ng-bind="vendor.coordinates.lat"></span>
+            <br>
+            Longitude: <span ng-bind="vendor.coordinates.long"></span>
+        </div>
+    </div>
+
+    <a class="btn" href="javascript:window.history.back()">Back</a>
+    <button class="btn btn-primary" ng-click="updateItem()">Save changes</button>
+</form>
+
+<button class="btn btn-danger" ng-click="deleteItem()">Delete item</button>

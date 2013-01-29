@@ -14,6 +14,7 @@ angular.module('manage', ['inventoryFilters','inventoryServices']).
             when('/attributes', { templateUrl: appRoot + 'inventory/partials/attributes.html', controller: AttributesCtrl }).
             when('/attribute/:itemId', { templateUrl: appRoot + 'inventory/partials/attributes-edit.html', controller: AttributeDetailCtrl }).
             when('/vendors', { templateUrl: appRoot + 'vendors/partials/index.html', controller: VendorsCtrl }).
+            when('/vendor/:itemId', { templateUrl: appRoot + 'vendors/partials/vendors-edit.html', controller: VendorDetailCtrl }).
             otherwise({ redirectTo: '/' });
   }]);
 
@@ -102,7 +103,7 @@ function ProductsCtrl($scope, $http, $location, $routeParams, ProductService) {
     // prepare model for new category
     $scope.newItem = { category_ids: [$scope.categoryId]};
 
-    $scope.addProduct = function () {
+    $scope.addItem = function () {
 
         if ($scope.form_item_new.$invalid) {
             // send alert..
@@ -385,6 +386,7 @@ function VendorsCtrl($scope, $http, $location) {
     !$scope.newItem ? $scope.newItem = { address: { country: 'USA' }, coordinates: { long: 0, lat: 0 }}:$scope.newItem;
     $scope.states = states;
     $scope.validation = { coordinates: false };
+    $scope.search = { query: "", results: [] };
 
     $scope.setCoordinates = function(){
         alert('lat: ' + $scope.newItem.coordinates.lat + '\r\n' +
@@ -431,4 +433,87 @@ function VendorsCtrl($scope, $http, $location) {
                 });
         }
     };
+
+    $scope.search = function(){
+        $http.get('/vendors/search/' + $scope.search.query).success(function (data) {
+            $scope.search.results = data;
+        });
+    }
+}
+
+function VendorDetailCtrl($scope, $http, $location, $routeParams) {
+    // check app state
+    checkAppState($scope, $http, $location);
+
+    var itemId = $routeParams.itemId;
+
+    $scope.categories = [];
+    $scope.states = states;
+    $scope.validation = { coordinates: false };
+
+    // get data
+    $http.get('/vendor/' + itemId).success(function (data) {
+        $scope.vendor = data;
+    });
+
+    $scope.loadCoordinates = function(){
+
+        var full_address = $scope.vendor.address.street + " " +
+            $scope.vendor.address.street2 + ", " +
+            $scope.vendor.address.city + ", " +
+            $scope.vendor.address.state + ", " +
+            $scope.vendor.address.postal_code + ", " +
+            $scope.vendor.address.country;
+
+        var geoSvc = new locjs.geo.gmapsService();
+
+        console.log(full_address);
+        geoSvc.getGeoDataFromAddress(full_address, function(locationInfo){
+            console.log(locationInfo);
+            $scope.vendor.coordinates = { long: 0, lat: 0 };
+            $scope.vendor.coordinates.lat = locationInfo.latitude;
+            $scope.vendor.coordinates.long = locationInfo.longitude;
+
+            $scope.validation.coordinates = locationInfo.latitude != 0 && locationInfo.longitude != 0;
+        });
+
+    };
+
+    $scope.deleteItem = function () {
+
+        if (confirm('Are you sure?')) {
+            $http({ method: 'DELETE', url: '/vendor/' + itemId }).
+                success(function (data, status, headers, config) {
+                    app.util.message('Vendor deleted.', { alertType: app.util.alertType.info() });
+                    app.cache.categories.removeById(itemId);
+                    $location.path('/vendors');
+                }).
+                error(function (data, status, headers, config) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with status
+                    // code outside of the <200, 400) range
+                });
+        }
+    };
+
+    $scope.updateItem = function () {
+
+        if ($scope.form_item_edit.$invalid) {
+            // do nothing..
+        } else {
+            $http({ method: 'PUT', url: '/vendor/' + itemId, data: $scope.vendor }).
+                success(function (data, status, headers, config) {
+                    app.util.message('Vendor updated.', { alertType: app.util.alertType.info() });
+                }).
+                error(function (data, status, headers, config) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with status
+                    // code outside of the <200, 400) range
+                });
+        }
+    };
+
+    $scope.isCategorySelected = function(category){
+        return true;
+    }
 }

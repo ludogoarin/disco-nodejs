@@ -27,7 +27,7 @@ app.configure('development', function(){
 app.get('/', routes.index);
 app.get('/doc', doc.index);
 app.get('/socketiotest', function (req, res) {
-  res.sendfile(__dirname + '/socketiotest.html');
+  res.sendfile(__dirname + '/routes/dash/socketiotest.html');
 });
 
 // management interface
@@ -58,6 +58,7 @@ app.put('/attribute/:id', appData.attributes.updateAttribute);
 app.post('/attributes/add', appData.attributes.addAttribute);
 // vendors
 app.get('/vendors/all', appData.vendors.findAll);
+app.get('/vendors/search/:query', appData.vendors.findByKeyword);
 app.get('/vendor/:id', appData.vendors.findById);
 app.delete('/vendor/:id', appData.vendors.deleteVendor);
 app.put('/vendor/:id', appData.vendors.updateVendor);

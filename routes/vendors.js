@@ -43,6 +43,15 @@ exports.findAll = function(req, res) {
     });
 };
 
+exports.findByKeyword = function(req, res) {
+    var query = req.params.query;
+    db.collection('vendors', function(err, collection) {
+        collection.find({ name: { $regex: '.*' + query + '*.', $options: 'i' } }).toArray(function(err, items) {
+            res.send(items);
+        });
+    });
+};
+
 exports.addVendor = function(req, res) {
     var vendor = req.body;
     console.log('Adding vendor: ' + JSON.stringify(vendor));
