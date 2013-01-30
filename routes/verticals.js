@@ -1,23 +1,22 @@
 var mongo = require('mongodb');
+var BSON = mongo.BSONPure
+    , _ = require('underscore')._;
 
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
+var db;
 
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('gtbl_disco', server, {safe: true});
+exports.setdb = function(dbObject) {
+    db = dbObject;
 
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to 'gtbl_disco' database");
-        db.collection('verticals', {safe:true}, function(err, collection) {
-            if (err) {
-                console.log("The 'verticals' collection doesn't exist. Creating it with sample data...");
-                populateDB();
-            }
-        });
-    }
-});
+    db.collection('verticals', {safe:true}, function(err, collection) {
+        if (err) {
+            //console.log("Collection doesn't exist. Creating it with sample data...");
+            //populateDB();
+            //console.log('Collection created and populated with sample data.')
+        } else {
+            console.log('Ok. Collection exists.');
+        }
+    });
+};
 
 exports.findById = function(req, res) {
     var id = req.params.id;

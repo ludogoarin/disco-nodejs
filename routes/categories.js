@@ -2,20 +2,13 @@ var mongo = require('mongodb');
 var BSON = mongo.BSONPure
     , _ = require('underscore')._;
 
-var db = null;
+var db;
 
 exports.setdb = function(dbObject) {
     db = dbObject;
 
     db.collection('categories', {safe:true}, function(err, collection) {
-        console.log('*** categories ***');
-        console.log('Checking that collection exists');
-        var items = collection.find();
-        var rowCount = items.totalNumberOfRecords;
-        console.log(items);
-        console.log(rowCount);
-
-        if (err || rowCount == 0) {
+        if (err) {
             //console.log("Collection doesn't exist. Creating it with sample data...");
             //populateDB();
             //console.log('Collection created and populated with sample data.')
