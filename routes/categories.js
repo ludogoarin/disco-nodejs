@@ -59,7 +59,7 @@ exports.findById = function(req, res) {
 
 exports.findAll = function(req, res) {
     db.collection('categories', function(err, collection) {
-        collection.find().toArray(function(err, items) {
+        collection.find().sort({name: 1}).toArray(function(err, items) {
             res.send(items);
         });
     });
