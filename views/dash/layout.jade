@@ -1,0 +1,42 @@
+!!! 5
+html
+    head
+        title= title
+        link(rel='stylesheet', href='http://twitter.github.com/bootstrap/assets/css/bootstrap.css')
+        link(rel='stylesheet', href='http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css')
+        link(rel='stylesheet', href='/dash/css/style.css')
+    body
+
+        div#wrap
+            div.navbar.navbar-inverse.navbar-fixed-top
+                div.navbar-inner
+                    div.container-fluid
+
+                        a.btn.btn-navbar
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+
+                        <a class="brand" href="/dash">Getable Dashboard</a>
+                        div.nav-collapse.collapse
+                            p.navbar-text.pull-right
+                                <span>Logged in as <a href="#" class="navbar-link">Username</a></span>
+
+                            ul.nav
+                                <li class="#{activetab == 'index' ? 'active':''}"><a href="/dash">Orders</a></li>
+                                <li class="#{activetab == 'help' ? 'active':''}"><a href="#">Help</a></li>
+
+            div.container-fluid
+                block content
+            <div id="push"></div>
+
+        div#footer
+            div.container
+                p.muted.credit
+                    © Getable 2013 - <a href="http://www.getable.com" target="_blank">www.getable.com</a>.
+
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js')
+        script(src='//maps.google.com/maps/api/js?sensor=false&region=us')
+        script(src='/js/lib/bootstrap.min.js')
+        script(src='/js/lib/underscore-min.js')
+        script(src='/dash/js/lib/backbone-min.js')

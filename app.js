@@ -2,6 +2,7 @@ var express = require('express')
   , routes = require('./routes')
   , doc = require('./routes/doc')
   , manage = require('./routes/manage')
+  , dash = require('./routes/dash')
   , http = require('http')
   , path = require('path');
 
@@ -24,11 +25,9 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+// public routes
 app.get('/', routes.index);
 app.get('/doc', doc.index);
-app.get('/socketiotest', function (req, res) {
-  res.sendfile(__dirname + '/routes/dash/socketiotest.html');
-});
 
 // management interface
 app.get('/manage', manage.index)
@@ -64,18 +63,16 @@ app.delete('/vendor/:id', appData.vendors.deleteVendor);
 app.put('/vendor/:id', appData.vendors.updateVendor);
 app.post('/vendors/add', appData.vendors.addVendor);
 
-/*
-// tasklist test app
 
-var mongoConnection = 'mongodb://mngoldo:hjk78Ttgs98@ds045107.mongolab.com:45107/disco1';
-var TaskList = require('./routes/tasklist');
-var taskList = new TaskList(mongoConnection);
+/** dashboard routes **/
+// orders
+app.get('/dash', dash.index);
+// sockets test
+app.get('/socketiotest', function (req, res) {
+    res.sendfile(__dirname + '/routes/dash/socketiotest.html');
+});
 
-app.get('/tasks/list', taskList.list.bind(taskList));
-app.post('/tasks/add', taskList.add.bind(taskList));
-app.post('/tasks/complete', taskList.complete.bind(taskList));
-*/
-
+// launch server
 server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
