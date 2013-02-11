@@ -15,7 +15,7 @@ mongo.MongoClient.connect(dbConn, function(err, db) {
 });
 
 function initDataRepos(dbInstance){
-    // ensure database is filled with starting data
+    // ensure database is filled with starting data & indexes
     prepareDb();
 
     // send db object to each data repo
@@ -23,12 +23,14 @@ function initDataRepos(dbInstance){
     exports.products.setdb(dbInstance);
     exports.attributes.setdb(dbInstance);
     exports.vendors.setdb(dbInstance);
+    exports.requests.setdb(dbInstance);
 }
 
 exports.categories = require('../routes/categories');
 exports.products = require('../routes/products');
 exports.attributes = require('../routes/attributes');
 exports.vendors = require('../routes/vendors');
+exports.requests = require('../routes/requests');
 
 var prepareDb = function(){
     // 1. build default data collections

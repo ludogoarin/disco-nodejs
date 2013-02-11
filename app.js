@@ -11,18 +11,18 @@ var app = express()
   , io = require('socket.io').listen(server);
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+    app.set('port', process.env.PORT || 3000);
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'jade');
+    app.use(express.logger('dev'));
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
+    app.use(app.router);
+    app.use(express.static(path.join(__dirname, 'public')));
 });
 
 app.configure('development', function(){
-  app.use(express.errorHandler());
+    app.use(express.errorHandler());
 });
 
 // public routes
@@ -62,26 +62,57 @@ app.get('/vendor/:id', appData.vendors.findById);
 app.delete('/vendor/:id', appData.vendors.deleteVendor);
 app.put('/vendor/:id', appData.vendors.updateVendor);
 app.post('/vendors/add', appData.vendors.addVendor);
-
+// requests
+app.get('/requests/all', appData.requests.findAll);
+app.get('/request/:id', appData.requests.findById);
+app.delete('/request/:id', appData.requests.deleteRequest);
+app.delete('/requests/all', appData.requests.deleteRequestsAll);
+app.put('/request/:id', appData.requests.updateRequest);
+app.post('/requests/add', function(req, res) {
+    console.log(req);
+    appData.requests.addRequest(req, res, function(insertedRecord){
+        io.sockets.emit('order', { success: true, result: insertedRecord });
+    });
+});
 
 /** dashboard routes **/
-// orders
+// dashboard area for customers
 app.get('/dash', dash.index);
+
 // sockets test
 app.get('/socketiotest', function (req, res) {
+    // return to all open socket connections
+    io.sockets.emit('order', { from: "server" });
+
     res.sendfile(__dirname + '/routes/dash/socketiotest.html');
 });
 
 // launch server
 server.listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+    console.log("Express server listening on port " + app.get('port'));
 });
 
 
 // dashboard through socket.io
 io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
+
+    socket.emit('news', { hello: 'world' });
+    socket.on('neworder', function (data) {
+      // return to the sending socket connection
+      socket.emit('order', data);
+      // return to all open socket connections
+      io.sockets.emit('order', data);
+    });
+
+    socket.on('set vendor id', function (vid) {
+        socket.set('vendor_id', vid, function () {
+            socket.emit('ready');
+        });
+    });
+
+    socket.on('msg', function () {
+        socket.get('vendor_id', function (err, name) {
+            console.log('Chat message by ', name);
+        });
+    });
 });

@@ -1,8 +1,55 @@
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io.connect('/');
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
+    var socket = io.connect('/');
+    socket.on('news', function (data) {
+        console.log(data);
+        //socket.emit('msg', { from: 'ludo' });
+    });
+
+    function testSocket() {
+        console.log("clicked!");
+        socket.emit('neworder', { from: 'ludo' });
+    }
+
+    function addRequest() {
+        $.ajax({
+            type: "POST",
+            url: "/requests/add",
+            data: {
+                time_stamp:"10-11-2013 03:10 PST",
+                start: (new Date()).toString(),
+                customer: "Kevin Halter",
+                line_items: [
+                    {
+                        product_id: "50fdcf2133fe79581b000008",
+                        quantity: 1
+                    },
+                    {
+                        product_id: "50fdcced33fe79581b000001",
+                        quantity: 2
+                    }]
+            },
+            success: function(){ alert('added to db'); },
+            dataType: "json"
+        });
+    }
+
+    function resetRequests() {
+        $.ajax({
+            type: "DELETE",
+            url: "/requests/all",
+            data: null,
+            success: function(){ alert('all deleted'); },
+            dataType: "json"
+        });
+    }
+
 </script>
+
+
+<a href="javascript:testSocket()">Test socket!</a>
+<br>
+<a href="javascript:addRequest()">Add request</a>
+<br>
+<a href="javascript:resetRequests()">Clear requests</a>

@@ -65,10 +65,30 @@ var dbSchema = {
         }]
     }],
 
+    // order requests
+    "requests": [{
+        "_id": ObjectID,
+        "user_id": USER_ID,
+        "time_stamp": datetime,
+        "status": string,
+        "line_items": [{
+            "_id": ObjectID,
+            "status": string,
+            "product_id": PRODUCT_ID,
+            "name": string,
+            "product_code": string,
+            "quantity": int
+        }],
+        "start": datetime,
+        "end": datetime,
+        target_vendors: [VENDOR_ID]
+    }],
+
     // orders collection
     "orders": [{
         "_id": ObjectID,
         "user_id": USER_ID,
+        "vendor _id": VENDOR_ID,
         "time_stamp": datetime,
         "status": string,
         "line_items": [{

@@ -1,0 +1,8 @@
+<td><%= customer %></td>
+<td><%= line_items.length + " items" %></td>
+<td><%= (new Date(start)).toLocaleDateString() + " " + (new Date(start)).toLocaleTimeString() %></td>
+<td><%= "address" %></td>
+<td>
+    <a href="#inbox/<%= _id %>" class="btn btn-info"><i class="icon-chevron-right icon-white"></i> View</a>
+    <a href="#" class="btn btn-danger"><i class="icon-trash icon-white"></i> Discard</a>
+</td>
