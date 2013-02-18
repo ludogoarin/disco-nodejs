@@ -1,6 +1,6 @@
-window.Inbox = Backbone.Model.extend({
+window.InboxItem = Backbone.Model.extend({
 
-    urlRoot: "/wines",
+    urlRoot: "/request",
 
     idAttribute: "_id",
 
@@ -37,15 +37,13 @@ window.Inbox = Backbone.Model.extend({
         _id: null,
         customer: "",
         summary: "",
-        country: "USA",
-        region: "California",
         timestamp: ""
     }
 });
 
 window.InboxCollection = Backbone.Collection.extend({
 
-    model: Inbox,
-    url: "/requests/all"
+    model: InboxItem,
+    url: "/requests"
 
 });

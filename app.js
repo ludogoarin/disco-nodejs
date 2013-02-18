@@ -63,7 +63,7 @@ app.delete('/vendor/:id', appData.vendors.deleteVendor);
 app.put('/vendor/:id', appData.vendors.updateVendor);
 app.post('/vendors/add', appData.vendors.addVendor);
 // requests
-app.get('/requests/all', appData.requests.findAll);
+app.get('/requests', appData.requests.findAll);
 app.get('/request/:id', appData.requests.findById);
 app.delete('/request/:id', appData.requests.deleteRequest);
 app.delete('/requests/all', appData.requests.deleteRequestsAll);
@@ -96,12 +96,11 @@ server.listen(app.get('port'), function(){
 // dashboard through socket.io
 io.sockets.on('connection', function (socket) {
 
-    socket.emit('news', { hello: 'world' });
     socket.on('neworder', function (data) {
       // return to the sending socket connection
       socket.emit('order', data);
       // return to all open socket connections
-      io.sockets.emit('order', data);
+      io.sockets.volatile.emit('order', data);
     });
 
     socket.on('set vendor id', function (vid) {
@@ -111,8 +110,8 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('msg', function () {
-        socket.get('vendor_id', function (err, name) {
-            console.log('Chat message by ', name);
+        socket.get('vendor_id', function (err, vid) {
+            console.log('message from vendor ', vid);
         });
     });
 });

@@ -3,6 +3,7 @@ var AppRouter = Backbone.Router.extend({
     routes: {
         ""                  : "home",
         "inbox"	            : "inbox",
+        "inbox/:id"	        : "inboxItem",
         "inbox/drafts"      : "drafts",
         "inbox/replied"	    : "replied",
         "inbox/archived"	: "archived"
@@ -34,6 +35,14 @@ var AppRouter = Backbone.Router.extend({
         this.headerView.selectMenuItem('inbox-menu');
     },
 
+    inboxItem: function(id) {
+        var item = new InboxItem({_id: id});
+        item.fetch({success: function(){
+            $("#content").html(new ItemView({model: item}).el);
+        }});
+        this.headerView.selectMenuItem('inbox-menu');
+    },
+
     drafts: function (id) {
         this.headerView.selectMenuItem('drafts-menu');
     },
@@ -53,7 +62,7 @@ var AppRouter = Backbone.Router.extend({
 
 });
 
-utils.loadTemplate(['HeaderView', 'HomeView', 'InboxView', 'InboxItemView'], function() {
+utils.loadTemplate(['HeaderView', 'HomeView', 'InboxView', 'InboxItemView', 'ItemView'], function() {
     app = new AppRouter();
     Backbone.history.start();
 });

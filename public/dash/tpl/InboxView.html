@@ -1,13 +1,9 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     var socket = io.connect('/');
-    socket.on('news', function (data) {
-        console.log(data);
-        //socket.emit('msg', { from: 'ludo' });
-    });
+
     socket.on('order', function (data) {
         app.reloadInbox();
-        //socket.emit('msg', { from: 'ludo' });
     });
 
 </script>
@@ -23,37 +19,5 @@
         </tr>
     </thead>
     <tbody>
-    <!--
-    <tr>
-        <td>Ludo Goarin - Getable</td>
-        <td>Backhoe dsa dsa dsad</td>
-        <td>03/12/2013 4:30 PM</td>
-        <td>500 Sansome St., San Francisco, CA 94111</td>
-        <td>
-            <a href="#live" class="btn btn-info"><i class="icon-share icon-white"></i> Reply</a>
-            <a href="#live" class="btn btn-danger"><i class="icon-trash icon-white"></i> Discard</a>
-        </td>
-    </tr>
-    <tr>
-        <td>Joe the Contractor - Builders Inc.</td>
-        <td>Concrete mixer</td>
-        <td>03/17/2013 1:30 PM</td>
-        <td>40 Baker St., San Francisco, CA 94117</td>
-        <td>
-            <a href="#live" class="btn btn-info"><i class="icon-share icon-white"></i> Reply</a>
-            <a href="#live" class="btn btn-danger"><i class="icon-trash icon-white"></i> Discard</a>
-        </td>
-    </tr>
-    <tr>
-        <td>Joe the Contractor - Builders Inc.</td>
-        <td>Concrete mixer</td>
-        <td>03/17/2013 10:30 AM</td>
-        <td>123 Main St., Dali City, CA 94123</td>
-        <td>
-            <a href="#live" class="btn btn-info"><i class="icon-share icon-white"></i> Reply</a>
-            <a href="#live" class="btn btn-danger"><i class="icon-trash icon-white"></i> Discard</a>
-        </td>
-    </tr>
-    -->
     </tbody>
 </table>

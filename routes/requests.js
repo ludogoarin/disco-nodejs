@@ -46,22 +46,7 @@ exports.findByKeyword = function(req, res) {
 };
 
 exports.addRequest = function(req, res, callback) {
-    //var request = req.body;
-    var request = {
-        time_stamp:(new Date()).toString(),
-        start: (new Date()).toString(),
-        customer: "Kevin Halter",
-        line_items: [
-            {
-                product_id: "50fdcf2133fe79581b000008",
-                quantity: 1
-            },
-            {
-                product_id: "50fdcced33fe79581b000001",
-                quantity: 2
-            }]
-    };
-
+    var request = req.body;
     console.log('Adding request: ' + JSON.stringify(request));
     db.collection('requests', function(err, collection) {
         collection.insert(request, {safe:true}, function(err, result) {
