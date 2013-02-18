@@ -1,5 +1,5 @@
 <h3 style="color: #ccc">Order Details</h3>
 <h1><%= customer %></h1>
 <hr>
-<div>Start: <%= new Date(start).toLocaleString() %></div>
-<div>End: <%= new Date(end).toLocaleString() %></div>
+<div>Start: <%= start ? new Date(start).toLocaleString():'N/A' %></div>
+<div>End: <%= end ? new Date(end).toLocaleString():'N/A' %></div>
